@@ -22,7 +22,7 @@ Content-Type: application/json
   "name": "测试课程tmp",
   "pic": "",
   "teachmode": "200002",
-  "users": "初级人员",
+  "users": "初级人员, Beginners, Intermediate",
   "tags": "",
   "grade": "204001",
   "description": "这是一门测试课程",
