@@ -82,10 +82,78 @@ public class TeachplanServiceImpl implements TeachplanService {
         }
     }
 
+    /**
+     * @param moveType
+     * @param teachplanId
+     */
+    // TODO: optimize
+    @Override
+    public void orderByTeachplan(String moveType, Long teachplanId) {
+        Teachplan teachplan = teachplanMapper.selectById(teachplanId);
+
+        Integer grade = teachplan.getGrade();
+        Integer orderby = teachplan.getOrderby();
+
+        Long courseId = teachplan.getCourseId();
+        Long parentid = teachplan.getParentid();
+        if("moveup".equals(moveType)) {
+            if(grade == 1) {
+                LambdaQueryWrapper<Teachplan> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(Teachplan::getCourseId, courseId)
+                        .eq(Teachplan::getGrade, 1)
+                        .lt(Teachplan::getOrderby, orderby)
+                        .orderByDesc(Teachplan::getOrderby)
+                        .last("limit 1");
+                Teachplan temp = teachplanMapper.selectOne(queryWrapper);
+                exchangeOrderby(teachplan, temp);
+            } else if(grade >= 2) {
+                LambdaQueryWrapper<Teachplan> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(Teachplan::getParentid, parentid)
+                        .lt(Teachplan::getOrderby, orderby)
+                        .orderByDesc(Teachplan::getOrderby)
+                        .last("limit 1");
+                Teachplan temp = teachplanMapper.selectOne(queryWrapper);
+                exchangeOrderby(teachplan, temp);
+            }
+        } else if("movedown".equals(moveType)) {
+            if(grade == 1) {
+                LambdaQueryWrapper<Teachplan> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(Teachplan::getCourseId, courseId)
+                        .eq(Teachplan::getGrade, 1)
+                        .gt(Teachplan::getOrderby, orderby)
+                        .orderByAsc(Teachplan::getOrderby)
+                        .last("limit 1");
+                Teachplan temp = teachplanMapper.selectOne(queryWrapper);
+                exchangeOrderby(teachplan, temp);
+            } else if(grade >= 2) {
+                LambdaQueryWrapper<Teachplan> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(Teachplan::getParentid, parentid)
+                        .gt(Teachplan::getOrderby, orderby)
+                        .orderByDesc(Teachplan::getOrderby)
+                        .last("limit 1");
+                Teachplan temp = teachplanMapper.selectOne(queryWrapper);
+                exchangeOrderby(teachplan, temp);
+            }
+        }
+    }
+
     private Integer getTeachplanCount(Long courseId, Long parentId) {
         LambdaQueryWrapper<Teachplan> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Teachplan::getCourseId, courseId)
                 .eq(Teachplan::getParentid, parentId);
         return Math.toIntExact(teachplanMapper.selectCount(queryWrapper) + 1);
+    }
+
+    private void exchangeOrderby(Teachplan teachplan, Teachplan temp){
+        if(temp == null) {
+            RaggieException.cast("On the end, cannot move down/up");
+        } else {
+            Integer tempOrderby = temp.getOrderby();
+            Integer orderby = teachplan.getOrderby();
+            teachplan.setOrderby(tempOrderby);
+            temp.setOrderby(orderby);
+            teachplanMapper.updateById(teachplan);
+            teachplanMapper.updateById(temp);
+        }
     }
 }

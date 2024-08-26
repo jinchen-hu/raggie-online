@@ -33,4 +33,11 @@ public class TeachplanController {
     public void deleteTeachplan(@PathVariable(name = "teachplanId") Long teachplanId) {
         teachplanService.deleteTeachplan(teachplanId);
     }
+
+    // TODO: enum move type
+    @ApiOperation("")
+    @PostMapping("/teachplan/{moveType}/{teachplanId}")
+    public void orderByTeachplan(@PathVariable(name = "moveType") String moveType, @PathVariable(name = "teachplanId") Long teachplanId) {
+        teachplanService.orderByTeachplan(moveType, teachplanId);
+    }
 }
