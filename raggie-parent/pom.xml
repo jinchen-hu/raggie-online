@@ -10,6 +10,8 @@
     <modules>
         <module>../raggie-base</module>
         <module>../raggie-content</module>
+        <module>../raggie-generator</module>
+        <module>../raggie-generator</module>
     </modules>
     <packaging>pom</packaging>
 
