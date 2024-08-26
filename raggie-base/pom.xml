@@ -12,7 +12,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>raggie-base</name>
     <description>raggie-base</description>
-    <packaging>pom</packaging>
+
     <properties>
         <java.version>17</java.version>
     </properties>

@@ -14,11 +14,6 @@
             <artifactId>raggie-content-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.raggie</groupId>
-            <artifactId>raggie-content-model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <!--cloud的基础环境包-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

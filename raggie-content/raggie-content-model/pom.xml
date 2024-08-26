@@ -8,10 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>raggie-content-model</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>raggie-content-model</name>
-    <description>raggie-content-model</description>
-    <packaging>pom</packaging>
+
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -59,14 +56,4 @@
             <artifactId>mybatis-spring</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>
