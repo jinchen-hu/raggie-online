@@ -47,7 +47,7 @@ public class CourseBaseInfoController {
     }
     @ApiOperation("")
     @GetMapping("/course/{courseId}")
-    public CourseBaseInfoDto getCourseBaseInfoById(@PathVariable Long courseId){
+    public CourseBaseInfoDto getCourseBaseInfoById(@PathVariable(value = "courseId") Long courseId){
         return courseBaseInfoService.getCourseBase(courseId);
     }
 
@@ -56,5 +56,12 @@ public class CourseBaseInfoController {
     public CourseBaseInfoDto updateCourseBase(@RequestBody @Validated EditCourseDto editCourseDto){
         Long companyId = 1232141425L;
         return courseBaseInfoService.updateCourseBase(companyId, editCourseDto);
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/course/{courseId}")
+    public void deleteCourseBase(@PathVariable(value = "courseId") Long courseId){
+        Long companyId = 1232141425L;
+        courseBaseInfoService.deleteCourseBase(companyId, courseId);
     }
 }

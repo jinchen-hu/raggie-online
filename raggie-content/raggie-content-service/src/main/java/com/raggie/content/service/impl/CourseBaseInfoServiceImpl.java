@@ -5,21 +5,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.raggie.base.exception.RaggieException;
 import com.raggie.base.model.PageParams;
 import com.raggie.base.model.PageResult;
-import com.raggie.content.mapper.CourseBaseMapper;
-import com.raggie.content.mapper.CourseCategoryMapper;
-import com.raggie.content.mapper.CourseMarketMapper;
+import com.raggie.content.mapper.*;
 import com.raggie.content.model.dto.AddCourseDto;
 import com.raggie.content.model.dto.CourseBaseInfoDto;
 import com.raggie.content.model.dto.EditCourseDto;
 import com.raggie.content.model.dto.QueryCourseParamsDto;
-import com.raggie.content.model.po.CourseBase;
-import com.raggie.content.model.po.CourseCategory;
-import com.raggie.content.model.po.CourseMarket;
+import com.raggie.content.model.po.*;
 import com.raggie.content.service.CourseBaseInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,6 +35,10 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
 
     @Autowired
     CourseMarketServiceImpl courseMarketService;
+    @Autowired
+    private CourseTeacherMapper courseTeacherMapper;
+    @Autowired
+    private TeachplanMapper teachplanMapper;
 
     @Override
     public PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto) {
@@ -172,6 +173,30 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
         BeanUtils.copyProperties(editCourseDto, courseMarket);
         courseMarketService.saveOrUpdate(courseMarket);
         return getCourseBaseInfo(courseId);
+    }
+
+    /**
+     * @param courseId
+     * @return
+     */
+    @Transactional
+    @Override
+    public void deleteCourseBase(Long companyId, Long courseId) {
+        CourseBase courseBase = courseBaseMapper.selectById(courseId);
+        if(!companyId.equals(courseBase.getCompanyId())) {
+            RaggieException.cast("You can only delete the course in your company");
+        }
+
+        LambdaQueryWrapper<CourseTeacher> teacherLambdaQueryWrapper= new LambdaQueryWrapper<>();
+        teacherLambdaQueryWrapper.eq(CourseTeacher::getCourseId, courseId);
+        courseTeacherMapper.delete(teacherLambdaQueryWrapper);
+
+        LambdaQueryWrapper<Teachplan> teachplanLambdaQueryWrapper= new LambdaQueryWrapper<>();
+        teachplanLambdaQueryWrapper.eq(Teachplan::getCourseId, courseId);
+        teachplanMapper.delete(teachplanLambdaQueryWrapper);
+
+        courseMarketMapper.deleteById(courseId);
+        courseBaseMapper.deleteById(courseId);
     }
 
     private CourseBaseInfoDto getCourseBaseInfo(Long courseId) {
