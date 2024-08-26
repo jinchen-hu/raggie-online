@@ -2,3 +2,4 @@
 2. Complete and optimize swaggers
 3. Add more tests
 4. Extract common constants and functionalities
+5. Apply global exception handlers

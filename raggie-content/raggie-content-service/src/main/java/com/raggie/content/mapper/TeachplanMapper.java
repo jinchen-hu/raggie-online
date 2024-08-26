@@ -1,7 +1,10 @@
 package com.raggie.content.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.raggie.content.model.dto.TeachplanDto;
 import com.raggie.content.model.po.Teachplan;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,5 +14,5 @@ import com.raggie.content.model.po.Teachplan;
  * @author itcast
  */
 public interface TeachplanMapper extends BaseMapper<Teachplan> {
-
+    List<TeachplanDto> selectTreeNodes(Long courseId);
 }
