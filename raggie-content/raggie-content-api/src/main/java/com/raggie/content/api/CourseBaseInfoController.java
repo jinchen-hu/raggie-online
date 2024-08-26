@@ -3,6 +3,8 @@ package com.raggie.content.api;
 
 import com.raggie.base.model.PageParams;
 import com.raggie.base.model.PageResult;
+import com.raggie.content.model.dto.AddCourseDto;
+import com.raggie.content.model.dto.CourseBaseInfoDto;
 import com.raggie.content.model.dto.QueryCourseParamsDto;
 import com.raggie.content.model.po.CourseBase;
 import com.raggie.content.service.CourseBaseInfoService;
@@ -24,5 +26,14 @@ public class CourseBaseInfoController {
     @ApiOperation("Query Course Interface")
     public PageResult<CourseBase> list(PageParams pageParams, @RequestBody(required = false) QueryCourseParamsDto queryCourseParams) {
         return courseBaseInfoService.queryCourseBaseList(pageParams, queryCourseParams);
+    }
+
+    @ApiOperation("")
+    @PostMapping("/course")
+    public CourseBaseInfoDto createCourseBase(@RequestBody AddCourseDto addCourseDto){
+        //获取到用户所属机构的id
+        Long companyId = 1232141425L;
+//        int i = 1/0;
+        return courseBaseInfoService.createCourseBase(companyId, addCourseDto);
     }
 }
