@@ -2,6 +2,7 @@ package com.raggie.content.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.raggie.base.exception.RaggieException;
 import com.raggie.base.model.PageParams;
 import com.raggie.base.model.PageResult;
 import com.raggie.content.mapper.CourseBaseMapper;
@@ -9,6 +10,7 @@ import com.raggie.content.mapper.CourseCategoryMapper;
 import com.raggie.content.mapper.CourseMarketMapper;
 import com.raggie.content.model.dto.AddCourseDto;
 import com.raggie.content.model.dto.CourseBaseInfoDto;
+import com.raggie.content.model.dto.EditCourseDto;
 import com.raggie.content.model.dto.QueryCourseParamsDto;
 import com.raggie.content.model.po.CourseBase;
 import com.raggie.content.model.po.CourseCategory;
@@ -33,6 +35,9 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
 
     @Autowired
     CourseCategoryMapper courseCategoryMapper;
+
+    @Autowired
+    CourseMarketServiceImpl courseMarketService;
 
     @Override
     public PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto) {
@@ -104,6 +109,68 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
             throw new RuntimeException("Failed to create course");
         }
 
+        return getCourseBaseInfo(courseId);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public CourseBaseInfoDto getCourseBase(Long id) {
+        CourseBaseInfoDto courseBaseInfoDto = new CourseBaseInfoDto();
+
+        CourseBase courseBase = courseBaseMapper.selectById(id);
+        if (courseBase == null) {
+            return null;
+        }
+        BeanUtils.copyProperties(courseBase, courseBaseInfoDto);
+
+        CourseMarket courseMarket = courseMarketMapper.selectById(id);
+        if(courseMarket != null) {
+            BeanUtils.copyProperties(courseMarket, courseBaseInfoDto);
+        }
+
+        courseBaseInfoDto.setStName(courseCategoryMapper.selectById(courseBase.getSt()).getName());
+        courseBaseInfoDto.setMtName(courseCategoryMapper.selectById(courseBase.getMt()).getName());
+        return courseBaseInfoDto;
+    }
+
+    /**
+     * @param companyId
+     * @param courseBaseInfoDto
+     * @return
+     */
+    @Override
+    public CourseBaseInfoDto updateCourseBase(Long companyId, EditCourseDto editCourseDto) {
+        Long courseId = editCourseDto.getId();
+        CourseBase courseBase = courseBaseMapper.selectById(courseId);
+        if(!companyId.equals(courseBase.getCompanyId())) {
+            RaggieException.cast("You can only edit the course in your company");
+        }
+        BeanUtils.copyProperties(editCourseDto, courseBase);
+        courseBase.setChangeDate(LocalDateTime.now());
+        courseBaseMapper.updateById(courseBase);
+
+        CourseMarket courseMarket = courseMarketMapper.selectById(courseId);
+        if(courseMarket == null) {
+            courseMarket = new CourseMarket();
+        }
+
+        courseMarket.setId(courseId);
+
+        String charge = editCourseDto.getCharge();
+        courseMarket.setCharge(charge);
+
+        if("201001".equals(charge)) {
+            Float price = editCourseDto.getPrice();
+            if(price == null || price <= 0) {
+                RaggieException.cast("Invalid course price");
+            }
+        }
+
+        BeanUtils.copyProperties(editCourseDto, courseMarket);
+        courseMarketService.saveOrUpdate(courseMarket);
         return getCourseBaseInfo(courseId);
     }
 
