@@ -30,7 +30,7 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
         // Condition: query by audit status
         queryWrapper.eq(StringUtils.isNotEmpty(queryCourseParamsDto.getAuditStatus()), CourseBase::getAuditStatus, queryCourseParamsDto.getAuditStatus());
         // Condition: query by publish status
-        queryWrapper.eq(StringUtils.isNotEmpty(queryCourseParamsDto.getPublishStatus()), CourseBase::getStatus, queryCourseParamsDto.getPublishStatus());
+        // queryWrapper.eq(StringUtils.isNotEmpty(queryCourseParamsDto.getPublishStatus()), CourseBase::getStatus, queryCourseParamsDto.getPublishStatus());
 
         // Paginate results
         Page<CourseBase> page = new Page<>(pageParams.getPageNo(), pageParams.getPageSize());
