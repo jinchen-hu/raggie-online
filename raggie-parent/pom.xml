@@ -11,7 +11,7 @@
         <module>../raggie-base</module>
         <module>../raggie-content</module>
         <module>../raggie-generator</module>
-        <module>../raggie-generator</module>
+        <module>../raggie-system</module>
     </modules>
     <packaging>pom</packaging>
 

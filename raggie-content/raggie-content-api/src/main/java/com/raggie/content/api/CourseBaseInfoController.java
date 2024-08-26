@@ -22,7 +22,7 @@ public class CourseBaseInfoController {
 
     @PostMapping("/course/list")
     @ApiOperation("Query Course Interface")
-    public PageResult<CourseBase> list(PageParams pageParams, @RequestBody QueryCourseParamsDto queryCourseParams) {
+    public PageResult<CourseBase> list(PageParams pageParams, @RequestBody(required = false) QueryCourseParamsDto queryCourseParams) {
         return courseBaseInfoService.queryCourseBaseList(pageParams, queryCourseParams);
     }
 }

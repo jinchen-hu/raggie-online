@@ -39,6 +39,6 @@ public class CourseBaseInfoServiceImpl implements CourseBaseInfoService {
         List<CourseBase> courseBaseList = pageResult.getRecords();
         long total = pageResult.getTotal();
 
-        return new PageResult<>(courseBaseList, total, pageParams.getPageNo(), pageParams.getPageSize());
+        return new PageResult<CourseBase>(courseBaseList, total, pageParams.getPageNo(), pageParams.getPageSize());
     }
 }
