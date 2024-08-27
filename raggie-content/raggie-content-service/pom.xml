@@ -13,7 +13,7 @@
 <dependencies>
     <dependency>
         <groupId>com.raggie</groupId>
-        <artifactId>raggie-media-model</artifactId>
+        <artifactId>raggie-content-model</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <!-- Exclude Spring Boot logger conflict-->
@@ -83,6 +83,12 @@
     <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-bootstrap</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.raggie</groupId>
+        <artifactId>raggie-content-model</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <scope>compile</scope>
     </dependency>
 </dependencies>
     <properties>
