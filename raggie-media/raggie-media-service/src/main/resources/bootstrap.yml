@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: media-service
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1
+      discovery:
+        namespace: ${spring.profiles.active}
+        group: raggie-project
+      config:
+        namespace: ${spring.profiles.active}
+        group: raggie-project
+        file-extension: yaml
+        refresh-enabled: true
+        shared-configs:
+          - data-id: logging-${spring.profiles.active}
+            group: raggie-project
+            refresh: true
+  profiles:
+    active: dev

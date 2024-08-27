@@ -5,3 +5,5 @@
 5. Apply global exception handlers
 6. (solved)Failed to read Nacos config with latest version
 7. replace bootstrap.yml with application.yml since it's not recommended by spring cloud
+8. support upload videos
+9. front end

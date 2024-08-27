@@ -13,6 +13,7 @@
         <module>../raggie-generator</module>
         <module>../raggie-system</module>
         <module>../raggie-gateway</module>
+        <module>../raggie-media</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -32,11 +33,11 @@
         <mybatis-plus-boot-starter.version>3.5.5</mybatis-plus-boot-starter.version>
         <mybatis-plus-generator.version>3.5.5</mybatis-plus-generator.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <minio.version>8.5.2</minio.version>
+        <minio.version>8.5.12</minio.version>
         <guava.version>33.2.1-jre</guava.version>
         <xxl-job-core.version>2.4.0</xxl-job-core.version>
         <swagger-annotations.version>2.2.22</swagger-annotations.version>
-        <okhttp.version>4.10.0</okhttp.version>
+        <okhttp.version>4.12.0</okhttp.version>
         <swagger-spring-boot-starter.version>1.9.0.RELEASE</swagger-spring-boot-starter.version>
         <elasticsearch.version>7.12.1</elasticsearch.version>
         <mybatis-spring-version>3.0.4</mybatis-spring-version>

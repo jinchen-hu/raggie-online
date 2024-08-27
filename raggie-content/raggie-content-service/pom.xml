@@ -13,13 +13,8 @@
 <dependencies>
     <dependency>
         <groupId>com.raggie</groupId>
-        <artifactId>raggie-content-model</artifactId>
+        <artifactId>raggie-media-model</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <!--Spring cloud base package-->
-    <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-context</artifactId>
     </dependency>
     <!-- Exclude Spring Boot logger conflict-->
     <dependency>
@@ -36,10 +31,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-test</artifactId>
         <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
     <!-- Spring Boot log4j2 -->
     <dependency>
