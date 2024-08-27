@@ -7,3 +7,4 @@
 7. replace bootstrap.yml with application.yml since it's not recommended by spring cloud
 8. support upload videos
 9. front end
+10. complete xxl job
