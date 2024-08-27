@@ -84,3 +84,15 @@ Content-Type: application/json
 ### Delete course
 DELETE {{content_host}}/content/course/118
 Content-Type: application/json
+
+########################################################################################################################
+
+### Query Course Request via Gateway
+POST {{gateway_host}}/content/course/list?pageNo=1&pageSize=10
+Content-Type: application/json
+
+{
+  "auditStatus": "202004",
+  "courseName": "java",
+  "publishStatus": ""
+}
