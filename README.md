@@ -8,3 +8,4 @@
 8. support upload videos
 9. front end
 10. complete xxl job
+11. course publish - with videos

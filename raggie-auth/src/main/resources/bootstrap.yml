@@ -1,9 +1,9 @@
 spring:
   application:
-    name: content-api
+    name: auth-service
   cloud:
     nacos:
-      server-addr: localhost:8848
+      server-addr: 127.0.0.1:8848
       discovery:
         namespace: ${spring.profiles.active}
         group: raggie-project
@@ -12,16 +12,10 @@ spring:
         group: raggie-project
         file-extension: yaml
         refresh-enabled: true
-        extension-configs:
-          - data-id: content-service-${spring.profiles.active}.yaml
-            group: raggie-project
-            refresh: true
         shared-configs:
           - data-id: logging-${spring.profiles.active}.yaml
             group: raggie-common
             refresh: true
-          - data-id: freemarker-config-${spring.profiles.active}.yaml
-            group: raggie-common
-            refresh: true
+
   profiles:
     active: dev
